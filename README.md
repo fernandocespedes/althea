@@ -25,7 +25,38 @@ To get started, ensure you have the following installed:
 ## Project Setup
 
 1. **Clone the Repository:**
+
    ```sh
    git clone https://github.com/your-username/althea.git
    cd althea
    ```
+
+2. **Install Dependencies:**
+
+```sh
+pipenv install
+```
+
+3. **Run Migrations:**
+
+```
+sh
+python manage.py migrate
+```
+
+4. **Start the Development Server:**
+
+```
+sh
+python manage.py runserver
+```
+
+### Features
+
+- Loan Application Analysis: Evaluate and analyze loan applications.
+- Amortization Schedule Calculation: Generate amortization schedules for approved loans.
+- Portfolio Management: Track and manage loan portfolios.
+
+### Contribution
+
+Contributions are welcome! Please fork the repository and submit pull requests for any improvements or new features.
