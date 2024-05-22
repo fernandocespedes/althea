@@ -51,9 +51,8 @@ To get started, ensure you have the following installed:
 
 ### Features
 
-- Loan Application Analysis: Evaluate and analyze loan applications.
+- Credit Origination Flow: Onboard the user, approve the credit request, and manage disbursements.
 - Amortization Schedule Calculation: Generate amortization schedules for approved loans.
-- Portfolio Management: Track and manage loan portfolios.
 
 ### Contribution
 
@@ -62,5 +61,3 @@ While the codebase for this project is maintained exclusively by me, I welcome a
 - **Suggestions and Feedback:** Feel free to open issues to propose new features, report bugs, or provide feedback on the project.
 - **Documentation:** You can suggest improvements or additions to the documentation by opening issues.
 - **Testing:** Report any bugs or issues you encounter to help improve the project.
-
-Please fork the repository and submit your suggestions or feedback through issues. I will review and consider all contributions.
