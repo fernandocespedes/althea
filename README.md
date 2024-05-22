@@ -57,4 +57,10 @@ To get started, ensure you have the following installed:
 
 ### Contribution
 
-Contributions are welcome! Please fork the repository and submit pull requests for any improvements or new features.
+While the codebase for this project is maintained exclusively by me, I welcome and appreciate your contributions in the following ways:
+
+- **Suggestions and Feedback:** Feel free to open issues to propose new features, report bugs, or provide feedback on the project.
+- **Documentation:** You can suggest improvements or additions to the documentation by opening issues.
+- **Testing:** Report any bugs or issues you encounter to help improve the project.
+
+Please fork the repository and submit your suggestions or feedback through issues. I will review and consider all contributions.
