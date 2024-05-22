@@ -33,23 +33,21 @@ To get started, ensure you have the following installed:
 
 2. **Install Dependencies:**
 
-```sh
-pipenv install
-```
+   ```sh
+   pipenv install
+   ```
 
 3. **Run Migrations:**
 
-```
-sh
-python manage.py migrate
-```
+   ```sh
+   python manage.py migrate
+   ```
 
 4. **Start the Development Server:**
 
-```
-sh
-python manage.py runserver
-```
+   ```sh
+   python manage.py runserver
+   ```
 
 ### Features
 
