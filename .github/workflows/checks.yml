@@ -20,7 +20,7 @@ jobs:
       - name: Set up .env file
         run: |
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
-          echo "DB_HOST=db" >> .env
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
           echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
           echo "DB_PASS=${{ secrets.DB_PASS }}" >> .env
