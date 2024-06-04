@@ -107,6 +107,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+    class Meta:
+        ordering = ["-created"]
+
     def full_name(self):
         if self.second_last_name:
             return f"{self.first_name} {self.last_name} {self.second_last_name}"

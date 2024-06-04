@@ -18,3 +18,13 @@ class BaseTest(TestCase):
         )
         cls.user.is_active = True
         cls.user.save()
+
+        cls.inactive_user = User.objects.create_user(
+            first_name="Jerry",
+            last_name="Garcia",
+            username="Sherry",
+            email="jerry@example.com",
+            password="Password123@",
+        )
+        cls.inactive_user.is_active = False
+        cls.inactive_user.save()
