@@ -52,6 +52,10 @@ urlpatterns = [
     ),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("api/users/", include("accounts.api.routers", namespace="accounts_api")),
+    path(
+        "api/credit-origination/",
+        include("credit_origination.api.routers", namespace="credit_origination_api"),
+    ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

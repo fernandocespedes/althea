@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # local
     "core.apps.CoreConfig",
     "accounts.apps.AccountsConfig",
+    "credit_origination.apps.CreditOriginationConfig",
 ]
 
 REST_FRAMEWORK = {

@@ -1,3 +1,4 @@
+from credit_origination.models import CreditType
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
@@ -28,3 +29,18 @@ class BaseTest(TestCase):
         )
         cls.inactive_user.is_active = False
         cls.inactive_user.save()
+
+        cls.superuser = User.objects.create_superuser(
+            first_name="David",
+            last_name="Gilmour",
+            username="dave_gilmour",
+            email="david@pfloyd.com",
+            password="SomeValidP@ss88",
+        )
+
+        cls.credit_type_data = {
+            "name": "Personal Loan",
+            "description": "A loan for personal expenses",
+            "active": True,
+        }
+        cls.credit_type = CreditType.objects.create(**cls.credit_type_data)

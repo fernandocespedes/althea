@@ -135,8 +135,8 @@ def activate_account_api(request, uidb64, token, timestamp):
 @swagger_auto_schema(
     method="post",
     request_body=ForgotPasswordSerializer,
-    operation_description="Reset Password Email",
-    operation_id="reset_password_email",
+    # operation_description="Reset Password Email",
+    # operation_id="reset_password_email",
     responses={400: "Bad Request", 201: "Email sent to user"},
 )
 @api_view(["POST"])
@@ -172,14 +172,14 @@ def forgot_password(request):
 @swagger_auto_schema(
     method="post",
     request_body=PasswordResetConfirmSerializer,
-    operation_description="Reset Password Confirm",
-    operation_id="reset_password_confirm",
+    # operation_description="Reset Password Confirm",
+    # operation_id="reset_password_confirm",
     responses={400: "Bad Request", 200: "Password successfully updated"},
 )
 @api_view(["POST"])
 def reset_password_confirm(request, uidb64, token, timestamp):
     """
-    Confirm the password reset.
+    Confirm the password reset
 
     This endpoint finalizes the password reset process by accepting a new password
     along with a uid, token, and timestamp. It updates the user's password if
@@ -242,7 +242,7 @@ def get_user_profile(request):
 @permission_classes([IsAuthenticated])
 def update_user_profile(request):
     """
-    Update the authenticated user's profile.
+    Update the authenticated user's profile
 
     Use this endpoint to update the profile details of the currently authenticated user.
     Updateable fields are: first_name, last_name, second_last_name, and email.
@@ -264,7 +264,7 @@ def update_user_profile(request):
 @permission_classes([IsAdminUser])
 def get_users(request):
     """
-    Retrieve a list of all users.
+    Retrieve a list of all users
 
     Use this endpoint to get a list of all users. Only accessible by admin users.
     """
