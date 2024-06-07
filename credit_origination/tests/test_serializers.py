@@ -1,9 +1,13 @@
 from credit_origination.api.serializers import (
     CreditTypeAdminSerializer,
     CreditTypeSerializer,
+    CreditRequestSerializer,
+    CreditRequestStatusUpdateSerializer,
 )
+from credit_origination.models import CreditRequest
 from django.utils.dateparse import parse_datetime
 from accounts.tests.base_test import BaseTest
+from decimal import Decimal
 
 
 class CreditTypeAdminSerializerTest(BaseTest):
@@ -82,3 +86,97 @@ class CreditTypeSerializerTest(BaseTest):
         self.assertEqual(data["name"], self.credit_type_data["name"])
         self.assertEqual(data["description"], self.credit_type_data["description"])
         self.assertEqual(parse_datetime(data["created"]), self.credit_type.created)
+
+
+class CreditRequestSerializerTest(BaseTest):
+    def setUp(self):
+        self.credit_request_data = {
+            "credit_type": self.credit_type.id,
+            "amount": Decimal("5000.00"),
+            "term": 24,
+            "user": self.user.id,
+        }
+        self.credit_request = CreditRequest.objects.create(
+            credit_type=self.credit_type,
+            amount=Decimal("5000.00"),
+            term=24,
+            user=self.user,
+        )
+
+    def test_credit_request_serializer_valid_data(self):
+        serializer = CreditRequestSerializer(data=self.credit_request_data)
+        self.assertTrue(serializer.is_valid())
+        self.assertEqual(
+            serializer.validated_data["amount"], self.credit_request_data["amount"]
+        )
+
+    def test_credit_request_serializer_invalid_amount(self):
+        invalid_data = self.credit_request_data.copy()
+        invalid_data["amount"] = -1000
+        serializer = CreditRequestSerializer(data=invalid_data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("amount", serializer.errors)
+
+    def test_credit_request_serializer_invalid_term(self):
+        invalid_data = self.credit_request_data.copy()
+        invalid_data["term"] = 150
+        serializer = CreditRequestSerializer(data=invalid_data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("term", serializer.errors)
+
+    def test_credit_request_serializer_read_only_fields(self):
+        serializer = CreditRequestSerializer(self.credit_request)
+        self.assertIn("id", serializer.data)
+        self.assertIn("created", serializer.data)
+        self.assertIn("status", serializer.data)
+        self.assertEqual(serializer.data["status"], "pending")
+
+
+class CreditRequestStatusUpdateSerializerTest(BaseTest):
+    def setUp(self):
+        self.credit_request = CreditRequest.objects.create(
+            credit_type=self.credit_type,
+            amount=Decimal("5000.00"),
+            term=24,
+            user=self.user,
+        )
+
+    def test_credit_request_status_update_serializer_valid_data(self):
+        update_data = {"status": "approved"}
+        serializer = CreditRequestStatusUpdateSerializer(
+            self.credit_request, data=update_data, partial=True
+        )
+        self.assertTrue(serializer.is_valid())
+        serializer.save()
+        self.assertEqual(serializer.data["status"], "approved")
+
+    def test_credit_request_status_update_serializer_invalid_status(self):
+        update_data = {"status": "invalid_status"}
+        serializer = CreditRequestStatusUpdateSerializer(
+            self.credit_request, data=update_data, partial=True
+        )
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("status", serializer.errors)
+
+    def test_credit_request_status_update_serializer_read_only_fields(self):
+        initial_data = {
+            "credit_type": self.credit_request.credit_type,
+            "amount": self.credit_request.amount,
+            "term": self.credit_request.term,
+            "created": self.credit_request.created,
+            "user": self.credit_request.user,
+        }
+        update_data = {
+            "credit_type": None,
+            "amount": 10000,
+            "term": 36,
+            "status": "approved",
+        }
+        serializer = CreditRequestStatusUpdateSerializer(
+            self.credit_request, data=update_data, partial=True
+        )
+        self.assertTrue(serializer.is_valid())
+
+        # Ensure read-only fields are unchanged
+        for field, value in initial_data.items():
+            self.assertEqual(getattr(self.credit_request, field), value)

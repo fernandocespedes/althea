@@ -29,4 +29,29 @@ urlpatterns = [
         views.delete_credit_type,
         name="credit_type_delete",
     ),
+    path(
+        "credit-requests/user/create/",
+        views.create_user_credit_request,
+        name="create_user_credit_request",
+    ),
+    path(
+        "credit-requests/user/<int:pk>/",
+        views.update_user_credit_request,
+        name="update_user_credit_request",
+    ),
+    path(
+        "credit-requests/list/",
+        views.credit_requests_admin_list,
+        name="credit_requests_admin_list",
+    ),
+    path(
+        "credit-requests/account/list/",
+        views.list_credit_requests,
+        name="list_credit_requests",
+    ),
+    path(
+        "credit-requests/status/update/<int:pk>/",
+        views.credit_request_status_update,
+        name="credit_request_status_update",
+    ),
 ]
