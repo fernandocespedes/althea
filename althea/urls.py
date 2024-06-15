@@ -56,6 +56,10 @@ urlpatterns = [
         "api/credit-origination/",
         include("credit_origination.api.routers", namespace="credit_origination_api"),
     ),
+    path(
+        "api/credit-lines/",
+        include("credit_line.api.routers", namespace="credit_line_api"),
+    ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
