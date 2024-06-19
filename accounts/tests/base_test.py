@@ -30,6 +30,17 @@ class BaseTest(TestCase):
         cls.inactive_user.is_active = False
         cls.inactive_user.save()
 
+        cls.admin_user = User.objects.create_user(
+            first_name="Bob",
+            last_name="Weir",
+            username="Bobby",
+            email="bobby@example.com",
+            password="Password123@",
+        )
+        cls.admin_user.is_active = True
+        cls.admin_user.is_staff = True
+        cls.admin_user.save()
+
         cls.superuser = User.objects.create_superuser(
             first_name="David",
             last_name="Gilmour",

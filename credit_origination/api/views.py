@@ -1,3 +1,4 @@
+from accounts.api.permissions import IsSuperUser
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -313,7 +314,7 @@ def list_credit_requests(request):
     },
 )
 @api_view(["PUT"])
-@permission_classes([IsAdminUser])
+@permission_classes([IsSuperUser])
 def credit_request_status_update(request, pk):
     """
     Update a credit request status

@@ -449,3 +449,19 @@ class TestCreditRequestStatusUpdateView(BaseTest, APITestCase):
         response = self.client.put(self.url, self.update_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("status", response.data)
+
+    def test_credit_request_status_update_success_by_superuser(self):
+        response = self.client.put(self.url, {"status": "approved"}, format="json")
+        self.credit_request.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.credit_request.status, "approved")
+
+    def test_credit_request_status_update_forbidden_for_staff(self):
+        self.client.force_authenticate(user=self.admin_user)
+        response = self.client.put(self.url, {"status": "approved"}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_credit_request_status_update_forbidden_for_regular_user(self):
+        self.client.force_authenticate(user=self.user)
+        response = self.client.put(self.url, {"status": "approved"}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
