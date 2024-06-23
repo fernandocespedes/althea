@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "credit_origination.apps.CreditOriginationConfig",
     "credit_line.apps.CreditLineConfig",
+    "credit_subline.apps.CreditSublineConfig",
 ]
 
 REST_FRAMEWORK = {

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from credit_line.models import CreditLine, CreditLineAdjustment
+from credit_subline.admin import CreditSublineInline
 
 
 class CreditLineAdjustmentInline(admin.TabularInline):
@@ -37,7 +38,7 @@ class CreditLineAdmin(admin.ModelAdmin):
     )
     search_fields = ["credit_limit"]
     list_filter = ["currency", "created", "status"]
-    inlines = [CreditLineAdjustmentInline]
+    inlines = [CreditLineAdjustmentInline, CreditSublineInline]
 
 
 class CreditLineAdjustmentAdmin(admin.ModelAdmin):
