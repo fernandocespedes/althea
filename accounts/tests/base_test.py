@@ -49,6 +49,16 @@ class BaseTest(TestCase):
             password="SomeValidP@ss88",
         )
 
+        cls.regular_user = User.objects.create_user(
+            first_name="Jeff",
+            last_name="Chimenti",
+            email="jeff@example.com",
+            username="chimentikeyboards",
+            password="Password123@",
+        )
+        cls.regular_user.is_active = True
+        cls.regular_user.save()
+
         cls.credit_type_data = {
             "name": "Personal Loan",
             "description": "A loan for personal expenses",
