@@ -64,6 +64,10 @@ urlpatterns = [
         "api/credit-sublines/",
         include("credit_subline.api.routers", namespace="credit_subline_api"),
     ),
+    path(
+        "api/loan-term/",
+        include("loan_management.api.routers", namespace="loan_management_api"),
+    ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

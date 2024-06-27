@@ -5,6 +5,7 @@ from credit_subline.models import (
     InterestRateAdjustment,
     CreditSublineStatusAdjustment,
 )
+from loan_management.admin import LoanTermInline
 
 
 class CreditSublineInline(admin.TabularInline):
@@ -69,6 +70,7 @@ class CreditSublineAdmin(admin.ModelAdmin):
         CreditAmountAdjustmentInline,
         InterestRateAdjustmentInline,
         CreditSublineStatusAdjustmentInline,
+        LoanTermInline,
     ]
 
 
