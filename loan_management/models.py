@@ -2,6 +2,7 @@ from django.db import models
 from credit_subline.models import CreditSubline
 from django.core.exceptions import ValidationError
 from credit_line.models import current_date
+from decimal import Decimal
 
 
 class LoanTerm(models.Model):
@@ -43,3 +44,50 @@ class LoanTerm(models.Model):
 
     class Meta:
         ordering = ["-start_date"]
+
+
+class PeriodicPayment(models.Model):
+    PAYMENT_STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("completed", "Completed"),
+        ("delayed", "Delayed"),
+    ]
+
+    loan_term = models.ForeignKey(
+        LoanTerm, on_delete=models.CASCADE, related_name="payments"
+    )
+    due_date = models.DateField()
+    amount_due = models.DecimalField(max_digits=10, decimal_places=2)
+    principal_component = models.DecimalField(max_digits=10, decimal_places=2)
+    interest_component = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(
+        max_length=10, choices=PAYMENT_STATUS_CHOICES, default="pending"
+    )
+    actual_payment_date = models.DateField(null=True, blank=True)
+
+    def clean(self):
+        # Ensuring all monetary values are positive
+        if self.amount_due < Decimal("0.00"):
+            raise ValidationError(
+                {"amount_due": "Amount due must be a positive value."}
+            )
+        if self.principal_component < Decimal("0.00"):
+            raise ValidationError(
+                {"principal_component": "Principal component must be a positive value."}
+            )
+        if self.interest_component < Decimal("0.00"):
+            raise ValidationError(
+                {"interest_component": "Interest component must be a positive value."}
+            )
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return (
+            f"{self.amount_due} - {self.due_date} | for loan term {self.loan_term.id}"
+        )
+
+    class Meta:
+        ordering = ["due_date"]
